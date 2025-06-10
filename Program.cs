@@ -38,9 +38,14 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthorization();
-app.MapControllers();
+
+// Endpoint raíz
+app.MapGet("/", () => "MangaBot API está funcionando correctamente!");
 
 // Endpoint de health check para Railway
 app.MapGet("/health", () => Results.Ok());
+
+// Mapear controladores
+app.MapControllers();
 
 app.Run();
