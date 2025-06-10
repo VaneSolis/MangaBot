@@ -7,10 +7,10 @@ startCommand = "dotnet out/MangaBot.dll"
 healthcheckPath = "/health"
 
 [phases.setup]
-nixPkgs = ["dotnet-sdk_8"]
+nixPkgs = ["dotnet-sdk_8", "icu", "zlib"]
 
 [phases.install]
-cmds = ["dotnet restore MangaBot.csproj"]
+cmds = ["dotnet restore MangaBot.csproj --no-cache"]
 
 [phases.build]
 cmds = ["dotnet publish MangaBot.csproj -c Release -o out"] 

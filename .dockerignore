@@ -1,0 +1,13 @@
+.git
+.gitignore
+.vs
+.vscode
+bin
+obj
+out
+*.user
+*.suo
+*.cache
+*.dll
+*.pdb
+*.log 
