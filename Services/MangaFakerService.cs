@@ -7,6 +7,11 @@ namespace MangaBot.Services
     {
         private readonly Faker<Manga> _mangaFaker;
         private readonly HashSet<string> _titulosUnicos;
+        private readonly string[] _generos = new[] 
+        { 
+            "Action", "Adventure", "Comedy", "Drama", "Fantasy", 
+            "Horror", "Mystery", "Romance", "SciFi", "Slice of Life" 
+        };
 
         public MangaFakerService()
         {
@@ -15,7 +20,7 @@ namespace MangaBot.Services
             _mangaFaker = new Faker<Manga>()
                 .RuleFor(m => m.Titulo, f => GenerateUniqueTitle(f))
                 .RuleFor(m => m.Autor, f => f.Name.FullName())
-                .RuleFor(m => m.Genero, f => f.PickRandom(new[] { "Acción", "Aventura", "Comedia", "Drama", "Fantasía", "Horror", "Misterio", "Romance", "Ciencia Ficción", "Slice of Life" }))
+                .RuleFor(m => m.Genero, f => f.PickRandom(_generos))
                 .RuleFor(m => m.Volumenes, f => f.Random.Number(1, 50))
                 .RuleFor(m => m.FechaPublicacion, f => f.Date.Past(10))
                 .RuleFor(m => m.Descripcion, f => f.Lorem.Paragraph())
