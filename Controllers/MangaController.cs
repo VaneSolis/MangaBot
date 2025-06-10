@@ -39,6 +39,9 @@ public class MangaController : ControllerBase
         var skip = random.Next(0, count);
         var manga = await _context.Mangas.Skip(skip).FirstOrDefaultAsync();
 
-        return manga ?? NotFound("No se pudo encontrar un manga aleatorio");
+        if (manga == null)
+            return NotFound("No se pudo encontrar un manga aleatorio");
+
+        return manga;
     }
 } 
