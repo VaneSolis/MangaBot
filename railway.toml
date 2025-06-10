@@ -1,9 +1,9 @@
 [build]
-builder = "nixpacks"
-buildCommand = "dotnet publish MangaBot.csproj -c Release -o out"
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "dotnet out/MangaBot.dll"
+startCommand = "dotnet MangaBot.dll"
 healthcheckPath = "/health"
 
 [phases.setup]
