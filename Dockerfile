@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0.100 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["MangaBot.csproj", "./"]
 RUN dotnet restore "MangaBot.csproj" --verbosity detailed
@@ -8,7 +8,7 @@ RUN dotnet build "MangaBot.csproj" -c Release -o /app/build --verbosity detailed
 FROM build AS publish
 RUN dotnet publish "MangaBot.csproj" -c Release -o /app/publish --verbosity detailed
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0.100 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "MangaBot.dll"] 
