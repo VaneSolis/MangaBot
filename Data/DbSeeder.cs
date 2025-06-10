@@ -18,7 +18,7 @@ public static class DbSeeder
         "Takehiko Inoue", "Akira Toriyama"
     };
 
-    public static async Task SeedAsync(AppDbContext context, int count)
+    public static async Task SeedAsync(ApplicationDbContext context, int count)
     {
         if (await context.Mangas.AnyAsync())
         {
@@ -36,7 +36,9 @@ public static class DbSeeder
                 Autor = Autores[random.Next(Autores.Length)],
                 FechaPublicacion = DateTime.Now.AddYears(-random.Next(1, 20)),
                 Genero = Generos[random.Next(Generos.Length)],
-                Capitulos = random.Next(1, 1000)
+                Volumenes = random.Next(1, 50),
+                Descripcion = "Descripción de ejemplo",
+                Estado = random.Next(2) == 0
             };
             mangas.Add(manga);
         }

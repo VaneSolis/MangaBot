@@ -4,21 +4,25 @@ namespace MangaBot.Models;
 
 public class Manga
 {
+    [Key]
     public int Id { get; set; }
     
     [Required]
-    [MaxLength(200)]
+    [StringLength(200)]
     public string Titulo { get; set; } = string.Empty;
     
-    [Required]
-    [MaxLength(100)]
+    [StringLength(100)]
     public string Autor { get; set; } = string.Empty;
+    
+    [StringLength(50)]
+    public string Genero { get; set; } = string.Empty;
+    
+    public int Volumenes { get; set; }
     
     public DateTime FechaPublicacion { get; set; }
     
-    [Required]
-    [MaxLength(100)]
-    public string Genero { get; set; } = string.Empty;
+    [StringLength(500)]
+    public string Descripcion { get; set; } = string.Empty;
     
-    public int Capitulos { get; set; }
+    public bool Estado { get; set; } // true = en publicación, false = finalizado
 } 

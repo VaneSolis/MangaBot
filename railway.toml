@@ -1,0 +1,15 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "dotnet MangaBot.dll"
+healthcheckPath = "/health"
+
+[phases.setup]
+nixPkgs = ["dotnet-sdk_8"]
+
+[phases.install]
+cmds = ["dotnet restore MangaBot-1.sln"]
+
+[phases.build]
+cmds = ["dotnet publish MangaBot-1.sln -c Release -o out"] 

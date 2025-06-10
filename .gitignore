@@ -133,4 +133,25 @@ $RECYCLE.BIN/
 
 # Environment files
 *.env
-appsettings.Development.json 
+appsettings.Development.json
+
+# Archivos de compilación
+bin/
+obj/
+out/
+
+# Archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.dll
+*.pdb
+*.log
+
+# Archivos de Railway
+.railway/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db 
