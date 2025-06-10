@@ -1,8 +1,9 @@
 [build]
 builder = "nixpacks"
+buildCommand = "dotnet publish MangaBot-1.sln -c Release -o out"
 
 [deploy]
-startCommand = "dotnet MangaBot.dll"
+startCommand = "dotnet out/MangaBot.dll"
 healthcheckPath = "/health"
 
 [phases.setup]
