@@ -14,14 +14,21 @@ builder.Services.AddControllers();
 
 // Configurar la base de datos
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    connectionString = "Server=localhost;Database=MangaBot;Trusted_Connection=True;TrustServerCertificate=True;";
+}
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
     options.UseSqlServer(connectionString, sqlOptions => 
     {
         sqlOptions.EnableRetryOnFailure(
             maxRetryCount: 3,
             maxRetryDelay: TimeSpan.FromSeconds(30),
             errorNumbersToAdd: null);
-    }));
+    });
+});
 
 // Registrar el servicio de generación de datos
 builder.Services.AddScoped<MangaFakerService>();
@@ -67,7 +74,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Ocurrió un error al inicializar la base de datos.");
+        logger.LogError(ex, "Ocurrió un error al inicializar la base de datos: {Message}", ex.Message);
     }
 }
 
