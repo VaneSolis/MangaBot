@@ -13,7 +13,4 @@ nixPkgs = ["dotnet-sdk_8", "icu", "zlib"]
 cmds = ["dotnet restore MangaBot.csproj --no-cache"]
 
 [phases.build]
-cmds = ["dotnet publish MangaBot.csproj -c Release -o out"]
-
-[phases.setup]
-nixPkgs = ["dotnet-sdk_8"] 
+cmds = ["dotnet publish MangaBot.csproj -c Release -o out"] 
