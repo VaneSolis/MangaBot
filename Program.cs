@@ -1,8 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using MangaBot.Data;
 using MangaBot.Services;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar la cultura por defecto
+CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -10,7 +15,13 @@ builder.Services.AddControllers();
 // Configurar la base de datos
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString, sqlOptions => 
+    {
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 3,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null);
+    }));
 
 // Registrar el servicio de generación de datos
 builder.Services.AddScoped<MangaFakerService>();
