@@ -33,25 +33,43 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Registrar el servicio de generación de datos
 builder.Services.AddScoped<MangaFakerService>();
 
+// Configurar HTTPS
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.HttpsPort = 443;
+});
+
 // Configurar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar el pipeline de la aplicación
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/error");
+    app.UseHsts();
+}
+
+// Configurar HTTPS
+app.UseHttpsRedirection();
+
+// Configurar CORS
+app.UseCors("AllowAll");
 
 // Asegurarse de que la base de datos existe y está actualizada
 using (var scope = app.Services.CreateScope())
@@ -78,8 +96,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseHttpsRedirection();
-app.UseCors("AllowAll");
 app.UseAuthorization();
 
 // Endpoint raíz
