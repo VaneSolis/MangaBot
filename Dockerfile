@@ -13,7 +13,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Configuración para Railway
-ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_URLS=http://+:${PORT:-8080}
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
